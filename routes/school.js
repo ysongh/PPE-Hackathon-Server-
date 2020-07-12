@@ -3,6 +3,23 @@ const router = express.Router();
 
 const School = require('../models/School');
 
+// GET /api/school
+// find all schools
+router.get('/', async (req, res) => {
+    try{
+        const schools = await School.find();
+
+        return res.status(200).json({
+            data: schools,
+            count: schools.length
+        });
+    } catch(err){
+        console.error(err);
+    }
+});
+
+module.exports = router;
+
 // POST /api/school
 // create a new school
 router.post('/', async (req, res) => {
