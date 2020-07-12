@@ -1,11 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const db_key = require('./config/keys').mongoURI;
 
 const app = express();
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 app.get('/', (req, res) => res.send('Server Work'));
+
+app.use('/api/auth', require('./routes/auth'));
 
 const port = process.env.PORT || 1000;
 
