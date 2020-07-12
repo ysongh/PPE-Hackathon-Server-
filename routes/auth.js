@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('../config/keys');
 
 const User = require('../models/Users');
 
@@ -19,9 +22,12 @@ router.post('/register', async (req, res) => {
             password: req.body.password
         });
 
-        const dataUser = await User.create(newUser);
+        const salt = await bcrypt.genSalt(10);
+        newUser.password = await bcrypt.hash(req.body.password, salt);
 
-        return res.status(201).json({ data: dataUser });
+        await newUser.save();
+
+        return res.status(201).json({ data: newUser });
     } catch(err){
         console.error(err);
     }
