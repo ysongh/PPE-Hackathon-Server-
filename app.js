@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => res.send('Server Work'));
 
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/school', require('./routes/school'));
 
 const port = process.env.PORT || 1000;
 
