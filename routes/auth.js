@@ -43,16 +43,21 @@ router.put('/login', async (req, res) => {
             return res.status(400).json({ errors: 'Email not found' });
         }
 
-        if(req.body.password != user.password){
+        const isMatch = await bcrypt.compare(req.body.password, user.password);
+
+        if(!isMatch){
             return res.status(400).json({ errors: 'Invalid email or password' });
         }
 
-        const loginData = {
-            name: user.name,
-            email: user.email,
-        };
+        const payload = { id: user.id };
 
-        return res.status(200).json({ data: loginData });
+        jwt.sign(payload, keys.secretOrKey, { expiresIn: '1 days' },
+            (err, token) => {
+                if (err) throw err;
+                res.status(200).json({ token });
+            }
+        );
+        
     } catch(err){
         console.error(err);
     }
