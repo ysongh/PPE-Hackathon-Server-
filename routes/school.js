@@ -40,4 +40,18 @@ router.post('/', async (req, res) => {
     }
 });
 
+// GET /api/school/:id
+// find all schools
+router.get('/:id', async (req, res) => {
+    try{
+        const school = await School.findById(req.params.id);
+
+        return res.status(200).json({
+            data: school
+        });
+    } catch(err){
+        console.error(err);
+    }
+});
+
 module.exports = router;
