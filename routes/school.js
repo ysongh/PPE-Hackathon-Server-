@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET /api/school/:id
-// find all schools
+// find a school by id
 router.get('/:id', async (req, res) => {
     try{
         const school = await School.findById(req.params.id);
