@@ -28,7 +28,11 @@ const SchoolSchema = new Schema({
     contactNumber: {
         type: String
     },
-    ppeNeed: []
+    ppeNeed: [],
+    date: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 module.exports = mongoose.model('School', SchoolSchema); 
